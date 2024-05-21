@@ -1,0 +1,45 @@
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    ports:
+      - "52200:80"
+    environment:
+      DBUSER: 
+      DBPASSWORD: 
+      MAIL_SMTPNAME: 
+      MAIL_SMTPPASSWORD: 
+    volumes:
+      - /mnt/raid/NextcloudData:/var/www/html/data
+      - ./nextcloud:/var/www/html
+    networks:
+      nextcloudnetwork:
+        ipv4_address: 10.5.0.5
+  mysql:
+    image: mysql:latest
+    container_name: nextcloud-mysql
+    environment:
+      MYSQL_DATABASE: nextcloud
+      MYSQL_ROOT_PASSWORD: 
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "52201:3306"
+    networks:
+      nextcloudnetwork:
+        ipv4_address: 10.5.0.6
+  redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    ports:
+      - "52202:6379"
+    networks:
+      nextcloudnetwork:
+        ipv4_address: 10.5.0.7
+networks:
+  nextcloudnetwork:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
