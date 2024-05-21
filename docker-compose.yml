@@ -5,28 +5,28 @@ services:
     ports:
       - "52200:80"
     environment:
-      DBUSER: 
-      DBPASSWORD: 
-      MAIL_SMTPNAME: 
-      MAIL_SMTPPASSWORD: 
+      DBUSER: root
+      DBPASSWORD: K3#!7!pZB4C@Vfg0
+      MAIL_SMTPNAME: admin@linepixer.com
+      MAIL_SMTPPASSWORD: HKNuPkvyaMms
     volumes:
       - /mnt/raid/NextcloudData:/var/www/html/data
       - ./nextcloud:/var/www/html
     networks:
-      nextcloudnetwork:
+      default:
         ipv4_address: 10.5.0.5
   mysql:
     image: mysql:latest
     container_name: nextcloud-mysql
     environment:
       MYSQL_DATABASE: nextcloud
-      MYSQL_ROOT_PASSWORD: 
+      MYSQL_ROOT_PASSWORD: K3#!7!pZB4C@Vfg0
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
       - "52201:3306"
     networks:
-      nextcloudnetwork:
+      default:
         ipv4_address: 10.5.0.6
   redis:
     image: redis:alpine
@@ -34,10 +34,10 @@ services:
     ports:
       - "52202:6379"
     networks:
-      nextcloudnetwork:
+      default:
         ipv4_address: 10.5.0.7
 networks:
-  nextcloudnetwork:
+  default:
     driver: bridge
     ipam:
      config:
