@@ -1,0 +1,14 @@
+[Unit]
+Description=Nextcloud
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/home/diazmatias/Nextcloud
+ExecStart=docker-compose up -d
+ExecStop=docker-compose down
+
+[Install]
+WantedBy=multi-user.target
